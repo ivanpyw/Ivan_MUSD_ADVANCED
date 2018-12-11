@@ -1,10 +1,14 @@
 package com.example.ivanp.a171058l_musd_assignment
 
+
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import android.widget.*
 import kotlinx.android.synthetic.main.activity_main.*
+import android.content.Intent
+import android.view.Menu
+import android.view.MenuItem
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,67 +27,72 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    fun BtnValidateOrSuccess(v: View) {
-        var MovieN: String = MovieName.text.toString()
-        var MovieD: String = Description.text.toString()
-        var MovieReleaseDate: String = ReleaseDate.text.toString()
-        var MovieSuitable :String = ""
-        var SuitableReason :String= "Reason:\n"
-        var LanguageGroup :String= ""
-
-
-
-        if(cbSuitable.isChecked) {
-            MovieSuitable += "False"
-            if(cbViolence.isChecked and cbLanguage.isChecked) {
-                SuitableReason+= "Violence\nLanguage Used"
-            }else if (cbViolence.isChecked) {
-                SuitableReason += "Violence\n"
-            }else if (cbLanguage.isChecked){
-                SuitableReason += "Language Used\n"
-            }
-        } else {
-            MovieSuitable += "True"
-        }
-
-        if(LangChinese.isChecked){
-            LanguageGroup += "Chinese"
-        }
-        else if(LangEnglish.isChecked){
-            LanguageGroup += "English"
-        }
-        else if(LangMalay.isChecked){
-            LanguageGroup += "Malay"
-        }
-        else if(LangTamil.isChecked){
-            LanguageGroup += "Tamil"
-        }
-
-
-        if (MovieN.isEmpty() or MovieD.isEmpty() or MovieReleaseDate.isEmpty()) {
-            if (MovieN.isEmpty()) {
-                MovieName.setError("Field Empty")
-            }
-
-            if (MovieD.isEmpty()) {
-                Description.setError("Field Empty")
-            }
-
-            if (MovieReleaseDate.isEmpty()) {
-                ReleaseDate.setError("Field Empty")
-            }
-
-        } else {
-            Toast.makeText(this, "Title = " + MovieN + "\n" + "Overview = " + MovieD + "\n" + "Release date = " + MovieReleaseDate + "\n" + "Language = " + LanguageGroup + "\n" + "Suitable for all ages = " + MovieSuitable + "\n" + SuitableReason , Toast.LENGTH_LONG).show()
-        }
-
-
-
-
-
-
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.movieaddmenu, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == R.id.ClearAddEntry)
+        {
+            MovieName.setText("")
+            Description.setText("")
+            LangEnglish.isChecked= true
+            ReleaseDate.setText("")
+            cbSuitable.isChecked= false
+            MovieName.requestFocus()
+            NotSuitable.visibility = View.INVISIBLE
 
+        }
 
+        else if(item?.itemId ==R.id.Addbtn)
+        {
+            var MovieInfo = applicationContext as MovieGetSet
+            val MovieName = findViewById<TextView>(R.id.MovieName)
+            val movien: String? = MovieName.text.toString()
+            val Description = findViewById<TextView>(R.id.Description)
+            val MovieDesc: String? = Description.text.toString()
+            val ReleaseDate = findViewById<TextView>(R.id.ReleaseDate)
+            val rDate: String? = ReleaseDate.text.toString()
+
+            val radioLangGroup = findViewById<RadioGroup>(R.id.RGLanguage)
+            val idSelected = radioLangGroup.checkedRadioButtonId
+            val radioLangText = findViewById<RadioButton>(idSelected).text
+
+            if (movien.isNullOrBlank()) {
+                MovieName.setError("Field empty")
+            }
+            if (MovieDesc.isNullOrBlank()) {
+                Description.setError("Field empty")
+            }
+            if (rDate.isNullOrBlank()) {
+                ReleaseDate.setError("Field empty")
+            }
+
+            if(!rDate.isNullOrBlank() && !movien.isNullOrBlank() && !MovieDesc.isNullOrBlank()){
+                MovieInfo.setMovieName(movien.toString())
+                MovieInfo.setMovieDesc(MovieDesc.toString())
+                MovieInfo.setMovieLang(radioLangText.toString())
+                MovieInfo.setMovieDate(rDate.toString())
+                if(cbSuitable.isChecked){
+                    MovieInfo.setMovieSuitable(false)
+                    if(cbLanguage.isChecked){
+                        MovieInfo.setMovieStrongLang(true)
+                    }
+                    if(cbViolence.isChecked){
+                        MovieInfo.setMovieViolence(true)
+                    }
+                }
+                val intent = Intent(this, ViewMovieDetails::class.java)
+                startActivity(intent)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this, ListMovie::class.java)
+        startActivity(intent)
+        super.onBackPressed()
+    }
 }

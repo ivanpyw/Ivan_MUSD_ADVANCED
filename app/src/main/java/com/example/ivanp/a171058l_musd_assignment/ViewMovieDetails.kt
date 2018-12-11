@@ -1,7 +1,13 @@
 package com.example.ivanp.a171058l_musd_assignment
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.ContextMenu
+import android.view.MenuItem
+import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import kotlinx.android.synthetic.main.activity_view_movie_details.*
 
 class ViewMovieDetails : AppCompatActivity() {
@@ -10,31 +16,63 @@ class ViewMovieDetails : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_movie_details)
 
-        var MovieInformation = MovieRater("Venom", "A black marvel villain", "english", "09-03-1999", "Yes")
+        var MovieInfo = applicationContext as MovieGetSet
+        titleinfo.text = MovieInfo.getMovieName()
+        Desc.text = MovieInfo.getMovieDesc()
+        lang.text = MovieInfo.getMovieLang()
+        ReleasingDate.text = MovieInfo.getMovieDate()
 
-        titleinfo.text= MovieInformation.Title
-        Desc.text= MovieInformation.Overview
-        lang.text= MovieInformation.Language
-        ReleasingDate.text = MovieInformation.RDate
-        SuitChild.text = MovieInformation.Suitable
+        if(!MovieInfo.getMovieRatings().isNullOrBlank()){
+            YesReviewText.text = MovieInfo.getMovieRatings()
+            RatingBar.rating = MovieInfo.getMovieStar()
+            RatingBar.visibility = View.VISIBLE
+            RatingBar.setIsIndicator(true)
+            NoReviewText.visibility = View.GONE
+        }
+
+        if(MovieInfo.getMovieSuitable()){
+            SuitChild.text = "Yes"
+        }
+        else{
+            if(MovieInfo.getMovieViolence()){
+                SuitChild.text = "Not Suitable\nViolence"
+            }
+            else if(MovieInfo.getMovieStrongLang()){
+                SuitChild.text = "Not Suitable\nLanguage Used Inappropriate"
+            }
+            else if(MovieInfo.getMovieStrongLang() && MovieInfo.getMovieViolence()){
+                SuitChild.text = "Not Suitable\nViolence\nLanguage Used Inappropriate"
+            }
+            else{
+                SuitChild.text = "Not Suitable"
+            }
+        }
+
+        registerForContextMenu(NoReviewText)
+        registerForContextMenu(YesReviewText)
+    }
+
+
+    override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+        if (v?.id == R.id.NoReviewText || v?.id == R.id.YesReviewText){
+            menu?.add(1, 1001, 1, "Add Review")
+        }
 
     }
 
-    class MovieRater(Title: String, Overview: String, Language: String, RDate: String, Suitable: String){
-        var Title : String
-        var Overview: String
-        var Language: String
-        var RDate: String
-        var Suitable: String
-
-        init{
-            this.Title = Title
-            this.Overview = Overview
-            this.Language =  Language
-            this.RDate =  RDate
-            this.Suitable =  Suitable
+    override fun onContextItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == 1001) {
+            var myIntent = Intent(this, RatingSystem::class.java)
+            startActivity(myIntent)
         }
+        return super.onContextItemSelected(item)
 
+    }
 
+    override fun onBackPressed() {
+        val intent = Intent(this, ListMovie::class.java)
+        startActivity(intent)
+        super.onBackPressed()
     }
 }

@@ -40,12 +40,41 @@
             android:layout_weight="0.025"
             android:textSize="14sp"/>
 
+
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/Desc"
             android:layout_weight="0.025"
             android:textSize="24sp"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Review:"
+            android:layout_weight="0.025"
+            android:textSize="14sp"/>
+
+    <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/RatingBar" android:numStars="5"
+            android:visibility="gone" android:clickable="false"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No Review yet."
+            android:layout_weight="0.025"
+            android:textSize="14sp"
+            android:id="@+id/NoReviewText"
+            />
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/YesReviewText" android:textSize="14sp"
+            android:text="Long hold to add a review\n"/>
+
+
 
     <TextView
             android:layout_width="match_parent"

@@ -15,12 +15,15 @@
             android:layout_height="wrap_content"
             android:text="Enter your review for the movie: Venom"
             android:layout_weight="0.025"
-            android:textSize="18sp"/>
+            android:textSize="18sp"
+            android:id="@+id/ReviewTextbox"
+            />
 
     <RatingBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.025"
+            android:id="@+id/RatingBar"
     />
 
     <EditText
@@ -28,6 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.025"
+            android:id="@+id/ratingreview"
 
     />
 

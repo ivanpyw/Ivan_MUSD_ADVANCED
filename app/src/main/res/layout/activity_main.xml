@@ -46,6 +46,7 @@
     />
 
     <RadioGroup
+            android:id="@+id/RGLanguage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -131,15 +132,6 @@
 
         />
     </LinearLayout>
-
-
-    <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="BtnValidateOrSuccess"
-            android:text="ADD MOVIE"
-
-    />
 
 
     </LinearLayout>
