@@ -1,90 +1,45 @@
 package com.example.ivanp.a171058l_musd_assignment
 
 import android.app.Application
-import java.util.*
+class movieItem(movieTitle:String, movieDesc: String, lang:String,releaseDate: String,suitable: String,langused: String, violent:String )
+{
+    var movieTitle = movieTitle
+    var movieDesc = movieDesc
+    var lang = lang
+    var releaseDate = releaseDate
+    var suitable = suitable
+    var review = "Long Press here to add review"
+    var rateStars:Float = 0F
+    var langused = langused
+    var violent = violent
 
-class MovieGetSet : Application(){
-    var name:String=""
-    var desc:String=""
-    var lang:String=""
-    var date:String=""
-    var suitable:Boolean=true
-    var violence:Boolean=false
-    var strongLang:Boolean=false
-    var ratings:String?=null
-    var star:Float= 0.0f
+}
+class MovieGetSet: Application() {
 
-    fun getMovieName():String{
-        return name
+
+    var movieArray:ArrayList<movieItem>
+    init {
+        this.movieArray= arrayListOf()
+    }
+    fun addMovie(newMovieEntity: movieItem){
+        this.movieArray.add(newMovieEntity)
     }
 
-    fun setMovieName(MovieName:String){
-        this.name = MovieName
+    fun getMovie():ArrayList<movieItem>{
+        return this.movieArray
     }
 
-    fun getMovieDesc():String{
-        return desc
+    private var testin:MovieGetSet? = null
+
+    fun getInstance():MovieGetSet?
+    {
+        return testin
     }
 
-    fun setMovieDesc(MovieDesc:String){
-        this.desc = MovieDesc
+    override fun onCreate()
+    {
+        super.onCreate()
+        testin = this
     }
 
-    fun getMovieLang():String{
-        return lang
-    }
-
-    fun setMovieLang(MovieLanguage:String){
-        this.lang = MovieLanguage
-    }
-
-    fun getMovieDate():String{
-        return date
-    }
-
-    fun setMovieDate(MovieDate:String){
-        this.date = MovieDate
-
-    }
-
-    fun getMovieSuitable():Boolean{
-        return suitable
-    }
-
-    fun setMovieSuitable(MovieSuitable:Boolean){
-
-        this.suitable = MovieSuitable
-    }
-
-    fun getMovieViolence():Boolean{
-        return violence
-    }
-
-    fun setMovieViolence(MovieViolence:Boolean){
-        this.violence = MovieViolence
-    }
-
-    fun getMovieStrongLang():Boolean{
-        return strongLang
-    }
-
-    fun setMovieStrongLang(sLang:Boolean){
-        this.strongLang = sLang
-    }
-
-    fun getMovieRatings():String?{
-        return ratings
-    }
-
-    fun setMovieRatings(MovieRatings:String?){
-        this.ratings = MovieRatings
-    }
-
-    fun getMovieStar():Float{
-        return star
-    }
-
-    fun setMovieStar(MovieRateStar:Float){
-        this.star = MovieRateStar
-    }
 }

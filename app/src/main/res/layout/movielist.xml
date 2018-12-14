@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context=".ListMovie">
 
-    <TextView
+    <ListView
         android:id="@+id/MovieListing"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="You have not added a movie.\n Long Press me to add a movie."
-        android:gravity="center"
+        android:layout_height="wrap_content"
         />
 
 </LinearLayout>

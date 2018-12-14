@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      tools:context=".MainActivity" >
+    <group
+            android:id="@+id/UnAuthenticateSettings"
+            android:enabled="true" android:visible="true" >
+        <item
+                android:id="@+id/menu_register"
+                android:orderInCategory="201"
+                app:showAsAction="ifRoom"
+                android:title="Add"/>
+
+    </group>
+</menu>

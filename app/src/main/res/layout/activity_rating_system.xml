@@ -13,11 +13,14 @@
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Enter your review for the movie: Venom"
+            android:text="Enter your review for the movie"
             android:layout_weight="0.025"
             android:textSize="18sp"
             android:id="@+id/ReviewTextbox"
             />
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/Movie_name"/>
 
     <RatingBar
             android:layout_width="wrap_content"

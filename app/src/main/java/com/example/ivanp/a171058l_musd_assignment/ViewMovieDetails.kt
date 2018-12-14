@@ -3,11 +3,12 @@ package com.example.ivanp.a171058l_musd_assignment
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.ActionBar
 import android.view.ContextMenu
 import android.view.MenuItem
+import android.widget.RatingBar
+import android.widget.TextView
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import kotlinx.android.synthetic.main.activity_view_movie_details.*
 
 class ViewMovieDetails : AppCompatActivity() {
@@ -16,63 +17,82 @@ class ViewMovieDetails : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_movie_details)
 
-        var MovieInfo = applicationContext as MovieGetSet
-        titleinfo.text = MovieInfo.getMovieName()
-        Desc.text = MovieInfo.getMovieDesc()
-        lang.text = MovieInfo.getMovieLang()
-        ReleasingDate.text = MovieInfo.getMovieDate()
+        val rate = findViewById<RatingBar>(R.id.RatingBar)
+        rate.visibility = View.GONE
 
-        if(!MovieInfo.getMovieRatings().isNullOrBlank()){
-            YesReviewText.text = MovieInfo.getMovieRatings()
-            RatingBar.rating = MovieInfo.getMovieStar()
+
+        val movie = applicationContext as MovieGetSet
+        var position = intent.getIntExtra("position", -1)
+        val movieDetails : movieItem
+        if(position > 0 || position == 0)
+        {
+            movieDetails = movie.getMovie().elementAt(position)
+        }
+        else
+        {
+            movieDetails = movie.getMovie().last()
+        }
+
+        val moviet = findViewById<TextView>(R.id.titleinfo)
+        val overview = findViewById<TextView>(R.id.descript)
+        val date = findViewById<TextView>(R.id.releasedate)
+        val language = findViewById<TextView>(R.id.lang)
+        val age = findViewById<TextView>(R.id.SuitChild)
+
+
+        moviet.text = movieDetails.movieTitle
+        overview.text = movieDetails.movieDesc
+        date.text = movieDetails.releaseDate
+        language.text = movieDetails.lang
+        if(movieDetails.suitable == "No")
+        {
+            age.text = movieDetails.suitable
+
+            if(movieDetails.langused == "Language Used" && movieDetails.violent =="") {
+                age.text = movieDetails.suitable +"(" + movieDetails.langused+ ")"
+            }
+            else if(movieDetails.violent == "Violence" && movieDetails.langused == "")
+            {
+                age.text = movieDetails.suitable +"(" + movieDetails.violent+ ")"
+            }
+            else if (movieDetails.langused == "Language Used" && movieDetails.violent =="Violence" )
+            {
+                age.text = movieDetails.suitable +"(" + movieDetails.langused+", "+movieDetails.violent+ ")"
+            }
+
+        }
+        else if(movieDetails.suitable == "Yes")
+        {
+            age.text = movieDetails.suitable
+        }
+
+        if(movieDetails.rateStars>0F)
+        {
+            RatingBar.layoutParams.height=ActionBar.LayoutParams.WRAP_CONTENT
+            RatingBar.rating = movieDetails.rateStars
             RatingBar.visibility = View.VISIBLE
-            RatingBar.setIsIndicator(true)
-            NoReviewText.visibility = View.GONE
+            review.text = movieDetails.review
         }
 
-        if(MovieInfo.getMovieSuitable()){
-            SuitChild.text = "Yes"
-        }
-        else{
-            if(MovieInfo.getMovieViolence()){
-                SuitChild.text = "Not Suitable\nViolence"
-            }
-            else if(MovieInfo.getMovieStrongLang()){
-                SuitChild.text = "Not Suitable\nLanguage Used Inappropriate"
-            }
-            else if(MovieInfo.getMovieStrongLang() && MovieInfo.getMovieViolence()){
-                SuitChild.text = "Not Suitable\nViolence\nLanguage Used Inappropriate"
-            }
-            else{
-                SuitChild.text = "Not Suitable"
-            }
-        }
+        registerForContextMenu(review)
 
-        registerForContextMenu(NoReviewText)
-        registerForContextMenu(YesReviewText)
     }
 
-
     override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
-        super.onCreateContextMenu(menu, v, menuInfo)
-        if (v?.id == R.id.NoReviewText || v?.id == R.id.YesReviewText){
-            menu?.add(1, 1001, 1, "Add Review")
+        if(v?.id == R.id.review)
+        {
+            menu?.add(1,1001,1,"Add Review")
         }
-
+        super.onCreateContextMenu(menu, v, menuInfo)
     }
 
     override fun onContextItemSelected(item: MenuItem?): Boolean {
-        if (item?.itemId == 1001) {
-            var myIntent = Intent(this, RatingSystem::class.java)
-            startActivity(myIntent)
+        val intent = Intent(applicationContext,EditMovie::class.java)
+        if(item?.itemId== 1001)
+        {
+            startActivity(intent)
         }
         return super.onContextItemSelected(item)
-
     }
 
-    override fun onBackPressed() {
-        val intent = Intent(this, ListMovie::class.java)
-        startActivity(intent)
-        super.onBackPressed()
-    }
 }

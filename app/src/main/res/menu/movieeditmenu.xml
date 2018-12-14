@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/SaveBtn"
-        android:title="Save"
-        app:showAsAction="always">
+    <group
+            android:id="@+id/UA"
+            android:enabled="true" android:visible="true" >
+        <item
+                android:id="@+id/SaveBtn" android:orderInCategory="201"
+                app:showAsAction="ifRoom" android:title="Save"/>
+        <item
+                android:id="@+id/CancelButton" android:orderInCategory="202"
+                app:showAsAction="ifRoom" android:title="Cancel"/>
+    </group>
 
-    </item>
 
-    <item
-        android:title="Cancel"
-        android:id="@+id/CancelButton"
-        app:showAsAction="always">
-    </item>
 
 </menu>
