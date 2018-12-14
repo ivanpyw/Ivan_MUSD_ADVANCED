@@ -11,10 +11,10 @@ class RatingSystem : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.movieedit)
+        setContentView(R.layout.activity_rating_system)
         val movie = applicationContext as MovieGetSet
         val movieDetails = movie.getMovie().last()
-        Movie_name.text = movieDetails.movieTitle
+        Moviename.text = movieDetails.movieTitle
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

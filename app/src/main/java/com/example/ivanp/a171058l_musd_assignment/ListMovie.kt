@@ -12,7 +12,7 @@ class ListMovie : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.movielist)
         registerForContextMenu(MovieListing)
         val movie = applicationContext as MovieGetSet
         if(movie.getMovie().isNotEmpty()) {

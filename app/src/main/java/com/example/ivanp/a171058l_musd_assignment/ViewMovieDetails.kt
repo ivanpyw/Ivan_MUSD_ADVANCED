@@ -87,7 +87,7 @@ class ViewMovieDetails : AppCompatActivity() {
     }
 
     override fun onContextItemSelected(item: MenuItem?): Boolean {
-        val intent = Intent(applicationContext,EditMovie::class.java)
+        val intent = Intent(applicationContext, RatingSystem::class.java)
         if(item?.itemId== 1001)
         {
             startActivity(intent)

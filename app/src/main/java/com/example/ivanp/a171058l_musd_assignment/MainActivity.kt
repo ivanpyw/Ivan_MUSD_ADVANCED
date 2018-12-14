@@ -18,21 +18,21 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val checkboxSuitable = findViewById<CheckBox>(R.id.cbSuitable)
-        checkboxSuitable.visibility = View.GONE
         val checkboxViolence = findViewById<CheckBox>(R.id.cbViolence)
         checkboxViolence.visibility = View.GONE
         val checkboxLanguage = findViewById<CheckBox>(R.id.cbLanguage)
-        checkboxLanguage.setOnCheckedChangeListener { buttonView, isChecked ->
+        checkboxLanguage.visibility = View.GONE
+        val checkboxSuitable = findViewById<CheckBox>(R.id.cbSuitable)
+        checkboxSuitable.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-                checkboxSuitable.visibility = View.VISIBLE
                 checkboxViolence.visibility = View.VISIBLE
+                checkboxLanguage.visibility = View.VISIBLE
             }
             else {
-                checkboxSuitable.visibility = View.GONE
-                checkboxSuitable.isChecked = false
                 checkboxViolence.visibility = View.GONE
                 checkboxViolence.isChecked = false
+                checkboxLanguage.visibility = View.GONE
+                checkboxLanguage.isChecked = false
             }
         }
     }
@@ -45,16 +45,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
-        if(item?.itemId == R.id.menu_register )
+        if(item?.itemId == R.id.Addbtn )
         {
             val name = findViewById<EditText>(R.id.MovieName)
             var desc = findViewById<EditText>(R.id.Description)
             var date = findViewById<EditText>(R.id.ReleaseDate)
-            val checkboxSuitable = findViewById<CheckBox>(R.id.cbSuitable)
-            checkboxSuitable.visibility = View.GONE
             val checkboxViolence = findViewById<CheckBox>(R.id.cbViolence)
             checkboxViolence.visibility = View.GONE
             val checkboxLanguage = findViewById<CheckBox>(R.id.cbLanguage)
+            checkboxLanguage.visibility = View.GONE
+            val checkboxSuitable = findViewById<CheckBox>(R.id.cbSuitable)
             if(name.text.isNullOrEmpty())
             {
                 name.setError("Field Empty!Enter a valid movie name!")
@@ -71,16 +71,16 @@ class MainActivity : AppCompatActivity() {
             var Radioid:Int = RadioGroup.checkedRadioButtonId
             if(Radioid != -1) {
                 val Radio1: RadioButton = findViewById(Radioid)
-                if(checkboxLanguage.isChecked) {
-                    if(checkboxSuitable.isChecked && checkboxViolence.isChecked == false) {
+                if(checkboxSuitable.isChecked) {
+                    if(checkboxViolence.isChecked && checkboxLanguage.isChecked == false) {
                         checkViolence ="Violence"
                         checkLanguage = ""
                     }
-                    else if(checkboxViolence.isChecked && checkboxSuitable.isChecked == false) {
+                    else if(checkboxLanguage.isChecked && checkboxLanguage.isChecked == false) {
                         checkLanguage= "Language Used"
                         checkViolence = ""
                     }
-                    else if (checkboxSuitable.isChecked && checkboxViolence.isChecked)
+                    else if (checkboxViolence.isChecked && checkboxLanguage.isChecked)
                     {
                         checkViolence ="Violence"
                         checkLanguage= "Language Used"
@@ -99,7 +99,7 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
 
-                else if(checkboxLanguage.isChecked == false)
+                else if(checkboxSuitable.isChecked == false)
                 {
                     val movie = applicationContext as MovieGetSet
                     val intent = Intent(applicationContext, ViewMovieDetails::class.java)

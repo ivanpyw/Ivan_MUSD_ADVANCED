@@ -59,7 +59,7 @@ class EditMovie : AppCompatActivity() {
         }
         else if (movieDetails.langused== "Language Used" && movieDetails.violent=="Violence") {
             checkboxLanguage.visibility = View.VISIBLE
-            checkboxLanguage.visibility = View.VISIBLE
+            checkboxViolence.visibility = View.VISIBLE
             checkboxLanguage.isChecked
             checkboxViolence.isChecked
         }
