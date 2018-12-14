@@ -22,7 +22,7 @@ class ViewMovieDetails : AppCompatActivity() {
 
 
         val movie = applicationContext as MovieGetSet
-        var position = intent.getIntExtra("position", -1)
+        var position = intent.getIntExtra("position", 0)
         val movieDetails : movieItem
         if(position > 0 || position == 0)
         {

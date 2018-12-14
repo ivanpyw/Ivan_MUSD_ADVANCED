@@ -115,7 +115,7 @@ class EditMovie : AppCompatActivity() {
             var radioid:Int = radiocheck.checkedRadioButtonId
             if(radioid != -1) {
                 val radio1: RadioButton = findViewById(radioid)
-                if(checkboxLanguage.isChecked) {
+                if(checkboxSuitable.isChecked) {
                     if(checkboxViolence.isChecked && checkboxLanguage.isChecked == false) {
                         checkViolence ="Violence"
                         checkLanguage = ""

@@ -14,14 +14,21 @@ class ListMovie : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.movielist)
         registerForContextMenu(MovieListing)
+
         val movie = applicationContext as MovieGetSet
-        if(movie.getMovie().isNotEmpty()) {
+        if (movie.getMovie().isNotEmpty()) {
             val adapter = movieAdapter(applicationContext, movie.getMovie())
             MovieListing.adapter = adapter
         }
+        MovieListing.setOnItemClickListener { _, _, position, _ ->
+            //val selectedMovie = movieAL.getMovies()[position]
 
-
+            val movieIntent = Intent(this, ViewMovieDetails::class.java)
+            movieIntent.putExtra("position", position)
+            startActivity(movieIntent)
+        }
     }
+
     class movieAdapter( private val context: Context,
                         private val dataSource: ArrayList<movieItem>) : BaseAdapter() {
 
